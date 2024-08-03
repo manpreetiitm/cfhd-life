@@ -1,0 +1,4 @@
+Flask==2.2.2
+pymongo==4.2.0
+prometheus_client==0.15.0
+Werkzeug==2.2.2

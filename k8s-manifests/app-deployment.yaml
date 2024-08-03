@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-python-app
+  namespace: custom-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-python-app
+  template:
+    metadata:
+      labels:
+        app: my-python-app
+    spec:
+      containers:
+      - name: my-python-app
+        image: manpreetiitm/my-python-app:v4
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGODB_URI
+          value: "mongodb://root:password@mongodb.custom-app.svc.cluster.local:27017/mydatabase" 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-python-app
+  namespace: custom-app
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: my-python-app
